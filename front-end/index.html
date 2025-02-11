@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Login Page" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="./Front-end.js/Login.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <title>Login</title>
+    <style>
+      #img {
+        width: 50px;
+        height: 50px;
+      }
+      body {
+        background-image: url("./assets/New background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        width: 360px;
+        background-color: #1a2653;
+        padding: 20px;
+        text-align: center;
+        color: white;
+        border-radius: 10px;
+      }
+      .tbox {
+        width: 90%;
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+      }
+      .btn {
+        width: 80%;
+        padding: 10px;
+        background: #704fc2;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      .btn:hover {
+        background: #679cdd;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <img id="img" src="./assets/Brain Tech.png" alt="" style="max-height: 200px !important;" />
+      <h3>LOG IN</h3>
+      <form id="login-form">
+        <input id="uname" class="tbox" type="text" placeholder="Username" required />
+        <input id="pwd" class="tbox" type="password" placeholder="Password" required />
+        <br />
+        <button type="submit" class="btn" onclick="validateLogin(event)">LOG IN</button>
+      </form>
+      <br />
+      <p>
+        <a href="./Html/forget_password.html" style="color: white;">Forgot Password?</a>
+      </p>
+    </div>
+
+    <div class="modal">
+      <p>Incorrect username or password</p>
+      <button class="btn" onclick="dismissModal()">TRY AGAIN</button>
+    </div>
+  </body>
+</html>

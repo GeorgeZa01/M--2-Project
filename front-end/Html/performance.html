@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Performance Reviews</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+  <style>
+    #nav .container-fluid,
+    .bg-body-tertiary {
+      background-color: #1a2653;
+      color: white;
+      padding: 0px;
+    }
+
+    #nav a {
+      color: white;
+    }
+
+    .navbar-toggler-icon {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+      border: white;
+    }
+
+    .navbar-toggler {
+      color: #ffffff;
+    }
+
+    header {
+      background-color: #1a2653;
+      padding: 5px;
+      border: white 2px solid;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+
+    body {
+      background-image: url('/assets/New\ background.jpg');
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .table-responsive {
+      margin: 20px auto;
+      max-width: 90%;
+    }
+
+    table th {
+      background-color: #9173da;
+      color: white;
+    }
+
+    table td {
+      background-color: white;
+      color: #1a2653;
+    }
+
+    .modal-content {
+      color: black;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #1a2653;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #9173da;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav id="nav" class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Modern Tech Solutions</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span id="ham" class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="../Html/attendance_leave.html">Attendance</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Html/employees.html">Employee Information</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Html/payslips.html">Payroll</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../Html/performance.html">Employee Review</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Logout</a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+  <div class="container">
+    <h1>Employee Performance Reviews</h1>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Employee ID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="employeeTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal for Performance Reviews -->
+  <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Performance Reviews</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="reviewContent"></div>
+          <hr />
+          <h5>Add a New Review</h5>
+          <textarea id="newReview" class="form-control" rows="3" placeholder="Write a new review..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" onclick="addReview()">
+            Add Review
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br><br>
+  <footer>
+    <p>&copy; 2023 Brain Tech. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Employee Data with Performance Reviews
+    const employees = [
+      {
+        employeeId: 1,
+        name: "Sibongile Nkosi",
+        position: "Software Engineer",
+        department: "Development",
+        reviews: ["Excellent team player", "Great problem-solving skills"],
+      },
+      {
+        employeeId: 2,
+        name: "Lungile Moyo",
+        position: "HR Manager",
+        department: "HR",
+        reviews: ["Great leadership", "Organized team activities"],
+      },
+      {
+        employeeId: 3,
+        name: "Thabo Molefe",
+        position: "Quality Analyst",
+        department: "QA",
+        reviews: ["Attention to detail", "Timely bug reporting"],
+      },
+      {
+        employeeId: 4,
+        name: "Keshav Naidoo",
+        position: "Sales Representative",
+        department: "Sales",
+        reviews: [],
+      },
+      {
+        employeeId: 5,
+        name: "Zanele Khumalo",
+        position: "Marketing Specialist",
+        department: "Marketing",
+        reviews: [],
+      },
+      {
+        employeeId: 6,
+        name: "Sipho Zulu",
+        position: "UI/UX Designer",
+        department: "Design",
+        reviews: [],
+      },
+      {
+        employeeId: 7,
+        name: "Naledi Moeketsi",
+        position: "DevOps Engineer",
+        department: "IT",
+        reviews: [],
+      },
+      {
+        employeeId: 8,
+        name: "Farai Gumbo",
+        position: "Content Strategist",
+        department: "Marketing",
+        reviews: [],
+      },
+      {
+        employeeId: 9,
+        name: "Karabo Dlamini",
+        position: "Accountant",
+        department: "Finance",
+        reviews: [],
+      },
+      {
+        employeeId: 10,
+        name: "Fatima Patel",
+        position: "Customer Support Lead",
+        department: "Support",
+        reviews: [],
+      },
+    ];
+
+    let selectedEmployee = null;
+
+    // Function to Render Employee Table
+    function renderEmployeeTable() {
+      const tableBody = document.getElementById("employeeTable");
+      tableBody.innerHTML = "";
+      employees.forEach((employee) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${employee.employeeId}</td>
+          <td>${employee.name}</td>
+          <td>${employee.position}</td>
+          <td>${employee.department}</td>
+          <td>
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="viewReviews(${employee.employeeId})"
+            >
+              View Reviews
+            </button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Function to View Reviews
+    function viewReviews(employeeId) {
+      const employee = employees.find((e) => e.employeeId === employeeId);
+      selectedEmployee = employee;
+
+      const reviewContent = document.getElementById("reviewContent");
+      reviewContent.innerHTML = employee.reviews.length
+        ? `<ul>${employee.reviews
+          .map((review) => `<li>${review}</li>`)
+          .join("")}</ul>`
+        : "<p>No reviews available.</p>";
+
+      const modal = new bootstrap.Modal(
+        document.getElementById("reviewModal")
+      );
+      modal.show();
+    }
+
+    // Function to Add a New Review
+    function addReview() {
+      const newReview = document.getElementById("newReview").value.trim();
+      if (newReview && selectedEmployee) {
+        selectedEmployee.reviews.push(newReview); // Add the review to the employee
+        document.getElementById("newReview").value = ""; // Reset the textarea
+
+        // Update the reviews displayed in the modal without closing it
+        const reviewContent = document.getElementById("reviewContent");
+        reviewContent.innerHTML = selectedEmployee.reviews.length
+          ? `<ul>${selectedEmployee.reviews
+            .map((review) => `<li>${review}</li>`)
+            .join("")}</ul>`
+          : "<p>No reviews available.</p>";
+
+        // Keep the modal open for further additions
+        const modal = bootstrap.Modal.getInstance(
+          document.getElementById("reviewModal")
+        );
+        modal.show();
+      } else {
+        alert("Review cannot be empty!");
+      }
+    }
+
+    // Render Table on Page Load
+    renderEmployeeTable();
+  </script>
+</body>
+
+</html>

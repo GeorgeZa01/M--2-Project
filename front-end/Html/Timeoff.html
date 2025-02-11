@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+    <title>Time Off Request Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            background-image: url("/assets/New%20background.jpg");
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        img {
+            height: 150px;
+            width: 150px;
+        }
+
+        .form-container {
+            border: 2px solid black;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            color: black;
+        }
+
+        h2 {
+            text-align: center;
+            color: #1a2653;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .btn {
+            background-color: #1a2653;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #394d8f;
+        }
+
+        footer {
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<section class="container">
+    <img src="../assets/Brain Tech.png" alt="Brain Tech Logo">
+</section>
+
+<div class="form-container">
+    <h2>Time Off Request Form</h2>
+    <form id="timeOffForm">
+        <label for="todaysDate">Today's Date:</label>
+        <input type="date" id="todaysDate" name="todaysDate" required>
+
+        <label for="employeeName">Employee:</label>
+        <select id="employeeName" name="employeeName" required>
+        <option value="">-- Loading Employees... --</option>
+        </select>
+
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required>
+
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" required>
+
+        <label for="reason">Reason for Time Off:</label>
+        <select id="reason" name="reason" required>
+            <option value="">-- Select Reason --</option>
+            <option value="Vacation">Vacation</option>
+            <option value="Personal Leave">Personal Leave</option>
+            <option value="Funeral">Funeral</option>
+            <option value="Family Reasons">Family Reasons</option>
+            <option value="Medical Leave">Medical Leave</option>
+            <option value="Others">Others</option>
+        </select>
+
+        <input type="text" id="otherReason" name="otherReason" placeholder="Specify reason" style="display:none;">
+
+        <label>
+            <input type="checkbox" id="agreement" required> I understand this request is subject to approval.
+        </label>
+
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>
+
+<!-- Link to External JavaScript -->
+<script src="../Front-end.js/timeoff.js" defer></script>
+
+</body>
+</html>
