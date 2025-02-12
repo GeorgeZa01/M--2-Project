@@ -1,6 +1,6 @@
 import { getAllEmployees } from "../models/attendanceModel.js";
 import { getAttendanceData, addAttendance } from "../models/attendanceModel.js";
-import { addLeaveRequest } from "../models/attendanceModel.js";
+
 
 export const fetchEmployees = async (req, res) => {
   try {
@@ -56,14 +56,13 @@ export const createAttendance = async (req, res) => {
   }
 };
 
-export const requestTimeOff = async (req, res) => {
+
+export const fetchTimeoff = async (req, res) => {
     try {
-      const { employee_id, beginning_date, ending_date, reason, status } = req.body;
-      const rows = await addLeaveRequest(employee_id, beginning_date, ending_date, reason, status);
-      res.status(201).json({ message: "Time off request submitted successfully", rows });
+      const requests = await getRequests();
+      res.json({ employees: requests });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "An error occurred while submitting the request" });
+      res.status(500).json({ error: error.message });
     }
   };
 

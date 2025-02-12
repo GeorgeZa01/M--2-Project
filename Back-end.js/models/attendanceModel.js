@@ -23,10 +23,10 @@ export const getAttendanceData = async () => {
     return result;
   };
 
-  export const addLeaveRequest = async (employee_id, beginning_date, ending_date, reason, status) => {
+  export const getLeaveRequest = async (todaysDate, beginning_date, ending_date, reason, status) => {
     const [rows] = await pool.query(
-      "INSERT INTO leave_request (employee_id, beginning_date, ending_date, reason, status) VALUES (?, ?, ?, ?, ?)",
-      [employee_id, beginning_date, ending_date, reason, status]
+      "SELECT * FROM timeoff_request WHERE (todaysDate, beginning_date, ending_date, reason, status) VALUES (?, ?, ?, ?, ?)",
+      [todaysDate, beginning_date, ending_date, reason, status]
     );
     return rows;
   };

@@ -117,9 +117,9 @@ function displayEmployees() {
             <p><strong>Salary:</strong> R${employee.salary}</p>
             <p><strong>Employment History:</strong> ${employee.employmentHistory}</p>
             <p><strong>Contact:</strong> ${employee.contact}</p>
-            <button class="btn btn-danger" onclick="updateEmployee(${employee.employeeId})">Update</button>
             <button class="btn btn-danger" onclick="removeEmployee(${employee.employeeId})">Remove</button>
-        `;
+            `;
+            // <button class="btn btn-danger" onclick="updateEmployee(${employee.employeeId})">Update</button>
 
     employeeCardsContainer.appendChild(card);
   });
@@ -157,13 +157,13 @@ document
   });
 
 // Function to remove an employee by ID
-function updateEmployee(id, updatedInfo) {
-  const index = employees.findIndex((employee) => employee.employeeId === id);
-  if (index !== -1) {
-    employees[index] = { ...employees[index], ...updatedInfo }; // Update the employee with new info
-    displayEmployees(); // Refresh the cards display
-  }
-}
+// function updateEmployee(id, updatedInfo) {
+//   const index = employees.findIndex((employee) => employee.employeeId === id);
+//   if (index !== -1) {
+//     employees[index] = { ...employees[index], ...updatedInfo }; // Update the employee with new info
+//     displayEmployees(); // Refresh the cards display
+//   }
+// }
 function removeEmployee(id) {
   const index = employees.findIndex((employee) => employee.employeeId === id);
   if (index !== -1) {

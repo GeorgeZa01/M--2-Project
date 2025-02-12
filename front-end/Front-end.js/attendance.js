@@ -45,7 +45,7 @@ fetch("http://localhost:3030/api/attendanceRoute")
       }
 
       // Leave Requests Section (Separate from Attendance)
-      if (employee.leaveRequests && employee.leaveRequests.length > 0) {
+      if (employee.timeoff_request && employee.leaveRequests.length > 0) {
         const leaveRequestsSection = document.createElement("div");
         leaveRequestsSection.classList.add("leave-section");
 
@@ -65,22 +65,22 @@ fetch("http://localhost:3030/api/attendanceRoute")
             </tr>
           </thead>
           <tbody>
-            ${employee.leaveRequests
-              .map(
-                (leave, index) => `
-                <tr data-employee-id="${employee.employeeId}" data-leave-index="${index}">
-                  <td>${leave.date}</td>
-                  <td>${leave.reason}</td>
-                  <td class="leave-status">${leave.status}</td>
-                  <td>
-                    <button class="btn btn-success btn-sm" onclick="approveLeave(${employee.employeeId}, ${index})">Approve</button>
-                    <button class="btn btn-danger btn-sm" onclick="denyLeave(${employee.employeeId}, ${index})">Deny</button>
-                  </td>
-                </tr>
-              `
-              )
-              .join("")}
-          </tbody>
+        ${employee.timeoff_request
+          .map(
+            (leave, index) => `
+            <tr data-employee-id="${employee.employeeId}" data-leave-index="${index}">
+              <td>${timeoff_request.start_date} to ${timeoff_request.end_date}</td>
+              <td>${timeoff_request.reasons}</td>
+              <td class="leave-status">${leave.status}</td>
+              <td>
+                <button class="btn btn-success btn-sm" onclick="approveLeave(${employee.employeeId}, ${index})">Approve</button>
+                <button class="btn btn-danger btn-sm" onclick="denyLeave(${employee.employeeId}, ${index})">Deny</button>
+              </td>
+            </tr>
+          `
+          )
+          .join("")}
+      </tbody>
         `;
         leaveRequestsSection.appendChild(leaveTable);
         employeeSection.appendChild(leaveRequestsSection);

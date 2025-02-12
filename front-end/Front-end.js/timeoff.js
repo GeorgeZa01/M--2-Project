@@ -5,23 +5,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     // Fetch Employees from API
     async function fetchEmployees() {
-        // try {
-            const response = await fetch("http://localhost:3000/api/employees");
+        try {
+            const response = await fetch("http://localhost:3030/api/employees");
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             
-            const employees = await response.json();
+            const data = await response.json();
             employeeDropdown.innerHTML = `<option value="">-- Select Employee --</option>`; // Reset dropdown
-            
-            employees.forEach(emp => {
+            employees = data.attendanceAndLeave
+            console.log(employees)
+            employees?.forEach(emp => {
                 const option = document.createElement("option");
-                option.value = emp.employee_id; // Ensure correct field name
+                option.value = emp.name; // Ensure correct field name
                 option.textContent = emp.name;
                 employeeDropdown.appendChild(option);
             });
-        // } catch (error) {
-        //     console.error("Error fetching employees:", error);
-        //     alert("Failed to load employees. Please try again later.");
-        // }
+        } catch (error) {
+            console.error("Error fetching employees:", error);
+            alert("Failed to load employees. Please try again later.");
+        }
     }
 
     // Show input field if "Others" is selected
@@ -40,20 +41,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         event.preventDefault();
 
         const formData = {
-            employee_id: employeeDropdown.value,
-            beginning_date: document.getElementById("startDate").value,
-            ending_date: document.getElementById("endDate").value,
-            reason: reasonDropdown.value === "Others" ? otherReasonInput.value : reasonDropdown.value,
+            todaysDate: document.getElementById("todaysDate").value ||null,
+            employeeName: document.getElementById("employeeName").value ||null, // Just use .value directly
+            startDate: document.getElementById("startDate").value ||null,
+            endDate: document.getElementById("endDate").value ||null,
+            reasons: reasonDropdown.value === "Others" ? otherReasonInput.value : reasonDropdown.value ||null,
             status: "Pending"
         };
-
-        if (!formData.employee_id) {
-            Swal.fire("Error", "Please select an employee", "error");
-            return;
-        }
-
+        
+        // console.log("Form Data:", formData); // Log to verify
+        
+        
         try {
-            const response = await fetch("http://localhost:3000/api/timeoff", {
+            console.log("Form Data:", formData); // Log to verify
+            const response = await fetch("http://localhost:3030/api/timeoff/submit", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData)
@@ -67,9 +68,14 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
         } catch (error) {
             Swal.fire("Error", "Something went wrong!", "error");
+            console.log("1",error);
         }
     });
 
     // Load employees when the page loads
     await fetchEmployees();
 });
+
+function logout () {
+    window.location.href = "../index.html";
+}
