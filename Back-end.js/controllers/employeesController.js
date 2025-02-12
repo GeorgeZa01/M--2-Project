@@ -1,22 +1,48 @@
-import { getEmployees,deleteEmployees,insertEmployees,updateEmployees } from "../models/employeesModel.js";
+import { getEmployees, deleteEmployees, insertEmployees, updateEmployees } from "../models/employeesModel.js";
 
+// Get all employees
 const getEmployeesController = async (req, res) => {
-    res.json({employees:await getEmployees()})
-}
- 
+    try {
+        const employees = await getEmployees();
+        res.json({ employees });
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching employees" });
+    }
+};
+
+// Add a new employee
 const postEmployeesController = async (req, res) => {
-    let {employeee_id,name, position, department, salary, employmentHistory, contact} = req.body
-    res.json({employees:await insertEmployees(employeee_id,name, position, department, salary, employmentHistory, contact)})
-}
+    const {name, position, department, salary, employmentHistory, contact } = req.body;
+    try {
+        const employees = await insertEmployees(name, position, department, salary, employmentHistory, contact);
+        res.json({ message: "Employee added successfully", employees });
+    } catch (error) {
+        res.status(500).json({ message: "Error adding employee" });
+    }
+};
 
+// Delete an employee
 const deleteEmployeesController = async (req, res) => {
-    res,json({employees:await deleteEmployees(req.params.id)})
-}
+    const { employee_id } = req.params;  // Get employee_id from params to delete
+    try {
+        const employees = await deleteEmployees(employee_id);
+        res.json({ message: "Employee deleted successfully", employees });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting employee" });
+    }
+};
 
+// Update an existing employee
 const editEmployeesController = async (req, res) => {
-    let {employeee_id,name, position, department, salary, employmentHistory, contact, employee_id
-} = req.body
-    res,json({employees:await updateEmployees(employeee_id,name, position, department, salary, employmentHistory, contact,employee_id)})
-}
+    const { name, position, department, salary, employmentHistory, contact } = req.body;
+    const { employee_id } = req.params;  // Get employee_id from params for update
 
-export {getEmployeesController,postEmployeesController,deleteEmployeesController,editEmployeesController}
+    try {
+        const employees = await updateEmployees(name, position, department, salary, employmentHistory, contact, employee_id);
+        res.json({ message: "Employee updated successfully", employees });
+    } catch (error) {
+        res.status(500).json({ message: "Error updating employee" });
+    }
+};
+
+export { getEmployeesController, postEmployeesController, deleteEmployeesController, editEmployeesController };
